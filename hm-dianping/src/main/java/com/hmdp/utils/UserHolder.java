@@ -9,6 +9,7 @@ public class UserHolder {
         tl.set(user);
     }
 
+
     public static UserDTO getUser(){
         return tl.get();
     }
