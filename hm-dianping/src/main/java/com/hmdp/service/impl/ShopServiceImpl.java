@@ -55,6 +55,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         if (shop == null) {
             return Result.fail("店铺不存在！");
         }
+        log.debug(shop.toString());
         return Result.ok(shop);
     }
 
