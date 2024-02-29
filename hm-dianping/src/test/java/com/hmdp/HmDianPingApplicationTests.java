@@ -54,6 +54,11 @@ class HmDianPingApplicationTests {
         System.out.println("time = " + (end - begin));
     }
 
+    /**
+     * 逻辑过期需要先存入一个不过期的数据
+     *
+     * @throws InterruptedException
+     */
     @Test
     void testSaveShop() throws InterruptedException {
         Shop shop = shopService.getById(1L);
@@ -84,5 +89,24 @@ class HmDianPingApplicationTests {
             }
             stringRedisTemplate.opsForGeo().add(key, locations);
         }
+    }
+
+    /**
+     * 测试百万数据
+     */
+    @Test
+    void testHyperLogLog() {
+        String[] values = new String[1000];
+        int j = 0;
+        for (int i = 0; i <= 1000000; i++) {
+            j = i % 1000;
+            values[j] = "user_" + i;
+            if (j == 999) {
+                stringRedisTemplate.opsForHyperLogLog().add("hll-test", values);
+            }
+        }
+        // 统计数量
+        Long size = stringRedisTemplate.opsForHyperLogLog().size("hll-test");
+        System.out.println("in hll, we got size = " + size);
     }
 }
