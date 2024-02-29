@@ -97,7 +97,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
             // 6.3成功，开启独立线程，实现缓存重建
             CACHE_REBUILD_EXECUTOR.submit(() -> {
                 try {
-                    saveShopToRedis(id, 20L);
+                    saveShopToRedis(id, LOCK_SHOP_TTL);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 } finally {
